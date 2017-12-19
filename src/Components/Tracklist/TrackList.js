@@ -1,5 +1,6 @@
-import React from '.react';
-import {Track} from // add from where
+import React from 'react';
+import {Track} from '../Track/Track.js'; // add from where
+import './TrackList.css';
 
 export class TrackList extends React.Component {
   render () {
@@ -7,8 +8,7 @@ export class TrackList extends React.Component {
       <div className="TrackList">
       {this.props.tracks.map(function(songObject) {
         return <Track key={songObject.id} track={songObject} onAdd={this.props.onAdd} onRemove={this.props.onRemove}/>
-      })
-
+      })}
       </div>
     )
   }
