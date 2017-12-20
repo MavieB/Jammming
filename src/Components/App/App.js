@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
-import './App.Css';
+import './App.css';
 import {SearchResults} from '../SearchResult/Searchresults.js';
 import {Playlist} from '../Playlist/Playlist.js'; // why is this the path name with .. and not ./Components/Playlist...
 import {SearchBar} from '../Searchbar/SearchBar.js';
-//import {Spotify} from '../../util/spotify.js';
+import {Spotify} from '../../util/spotify.js';
 
 
 class App extends Component {  //when does it say React.Component?
@@ -47,11 +47,18 @@ class App extends Component {  //when does it say React.Component?
   }
 
   savePlaylist () { //point 62 of instructions
-    //const trackURIs = this.state.playlistTracks.map(track => track.uri); // not sure if I have to add a function
-    }
+    const trackURIs = this.state.playlistTracks.map(track => track.uri); // not sure if I have to add a function
+    Spotify.savePlaylist(this.state.playlistName, trackURIs);
+    this.setState({
+      playlistName: 'New Playlist',
+      searchResult: []
+    })
+  }
 
-  search(searchterm) {
-    console.log(searchterm);
+  search(term) {
+    Spotify.search(term).then(searchResults => {
+      this.setState({searchResults: searchResults}); // Update the state of searchResults with the value resolved from Spotify.search()'s promise.
+    });
   }
 
   render() {
