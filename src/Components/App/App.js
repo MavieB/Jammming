@@ -38,7 +38,7 @@ class App extends Component {  //when does it say React.Component?
 
   removeTrack(track) {
     let updatedPlayList = this.state.playlistTracks
-    updatedPlayList.splice(track.id,1); // this I will have to change
+    updatedPlayList.splice(this.state.playlistTracks.indexOf(track),1); // this I will have to change
     this.setState({playlistTracks: updatedPlayList})
   }
   // why do I define that method here, and not in track.js?
