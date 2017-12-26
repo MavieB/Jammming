@@ -5,6 +5,9 @@ import {SearchResults} from '../SearchResult/Searchresults.js';
 import {Playlist} from '../Playlist/Playlist.js'; // why is this the path name with .. and not ./Components/Playlist...
 import {SearchBar} from '../Searchbar/SearchBar.js';
 import {Spotify} from '../../util/spotify.js';
+import {debugSearchResults} from '../../util/debug.js';
+
+const debug = false;
 
 
 class App extends Component {  //when does it say React.Component?
@@ -42,13 +45,15 @@ class App extends Component {  //when does it say React.Component?
 
   updatePlaylistname(name) {
     this.setState({
-      playlistname : name
+      playlistName : name
     });
   }
 
   savePlaylist () { //point 62 of instructions
     const trackURIs = this.state.playlistTracks.map(track => track.uri); // not sure if I have to add a function
-    Spotify.savePlaylist(this.state.playlistName, trackURIs);
+    if (!debug) {
+      Spotify.savePlaylist(this.state.playlistName, trackURIs);
+    }
     this.setState({
       playlistName: 'New Playlist',
       searchResult: []
@@ -56,9 +61,22 @@ class App extends Component {  //when does it say React.Component?
   }
 
   search(term) {
-    Spotify.search(term).then(searchResults => {
-      this.setState({searchResults: searchResults}); // Update the state of searchResults with the value resolved from Spotify.search()'s promise.
-    });
+    if (!debug) {
+      Spotify.search(term).then(searchResults => {
+        this.setState({searchResults: searchResults}); // Update the state of searchResults with the value resolved from Spotify.search()'s promise.
+      });
+    } else { // returns an array of objects with the following keys/values
+      this.setState({
+        searchResults: debugSearchResults.tracks.items.map(track => {
+        return   {
+            id: track.id,
+            name: track.name,
+            artist: track.artists[0].name,
+            album: track.album.name,
+            uri: track.uri
+          };
+        })})
+      }
   }
 
   render() {

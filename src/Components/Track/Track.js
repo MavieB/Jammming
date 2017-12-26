@@ -1,4 +1,5 @@
 import React from 'react';
+import './Track.css';
 
 export class Track extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ export class Track extends React.Component {
       <h3>{this.props.track.name}</h3>
       <p>{this.props.track.artist} | {this.props.track.album}</p>
       </div>
-      <a class="Track-action"> {this.renderAction()} </a> {/*see if i need to do commas in front of plus */}
+      {this.renderAction()}
       </div>
     )
   }

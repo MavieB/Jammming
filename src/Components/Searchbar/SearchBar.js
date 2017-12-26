@@ -11,8 +11,8 @@ export class SearchBar extends React.Component {
      }
   }
 
-  search (state) {
-    this.props.onSearch(state)  //passes the state of the term to this.props.onSearch.
+  search(state) {
+    this.props.onSearch(this.state.term)  //passes the state of the term to this.props.onSearch.
   }
 
   handleTermChange (event){
